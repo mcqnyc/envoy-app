@@ -7,12 +7,12 @@ app.use(middleware());
 
 app.post('/visit-duration', (req, res) => {
   res.send([
+    // {
+    //   label: 'Min Stay',
+    //   value: 0,
+    // },
     {
-      label: 'Min Stay',
-      value: 0,
-    },
-    {
-      label: 'Max Stay',
+      label: 'MaxVisitDuration',
       value: 180,
     },    
   ]);
@@ -42,6 +42,8 @@ app.post('/validate-me', (req, res) => {
     foo, // we will save the original "foo" from the payload
     bar: 'hello world', // along with a new "bar" variable
   });
+  // res.sendFailed('These values are bad.');
+
 });
 
 app.post('/visitor-sign-in', async (req, res) => {
