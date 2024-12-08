@@ -20,33 +20,11 @@ app.post('/visit-duration', (req, res) => {
 });
 
 app.post('/validate-me', (req, res) => {
-  // const {
-  //   envoy: {
-  //     payload: {
-  //       foo,
-  //     },
-  //   }
-  // } = req;
-  // res.send({
-  //   foo, // we will save the original "foo" from the payload
-  //   bar: 'hello world', // along with a new "bar" variable
-  // });
-  // const {
-  //   envoy: {
-  //     payload: {
-  //       foo,
-  //     },
-  //   }
-  // } = req;
   const envoy = req.envoy
   const maxVisitDuration = envoy.payload.MaxVisitDuration
-  console.log('foo: ', maxVisitDuration);
-  // console.log('foo: ', envoy.payload);
-  if (maxVisitDuration >= 0 && maxVisitDuration <= 18) {
-    res.send({
-      // maxVisitDuration, // we will save the original "foo" from the payload
-      // message: 'hello world', // along with a new "bar" variable
-    });
+  
+  if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
+    res.send('Success!');
   } else {
     res.sendFailed('These values are bad: the duration should be between 0 and 180 minutes');
   }
