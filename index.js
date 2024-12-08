@@ -40,8 +40,9 @@ app.post('/validate-me', (req, res) => {
   // } = req;
   const envoy = req.envoy
   const maxVisitDuration = envoy.payload.MaxVisitDuration
+  console.log('foo: ', maxVisitDuration);
   // console.log('foo: ', envoy.payload);
-  if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
+  if (maxVisitDuration >= 0 && maxVisitDuration <= 18) {
     res.send({
       // maxVisitDuration, // we will save the original "foo" from the payload
       // message: 'hello world', // along with a new "bar" variable
