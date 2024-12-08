@@ -4,6 +4,7 @@ const { middleware, errorMiddleware } = require('@envoy/envoy-integrations-sdk')
 const app = express();
 app.use(middleware());
 
+let maxVisitDurationLocal = false;
 
 app.post('/visit-duration', (req, res) => {
   res.send([
@@ -16,14 +17,14 @@ app.post('/visit-duration', (req, res) => {
 
 app.post('/validate-me', async (req, res) => {
   const envoy = req.envoy
-  const installStorage = envoy.installStorage
+  // const installStorage = envoy.installStorage
   const maxVisitDuration = envoy.payload.MaxVisitDuration
 
   if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
-    await installStorage.set('maxVisitDuration', maxVisitDuration);
-    const { value } = await installStorage.get('maxVisitDuration');
-    console.log('maxVisitDuration value:', value)
-    
+    // await installStorage.set('maxVisitDuration', maxVisitDuration);
+    // const { value } = await installStorage.get('maxVisitDuration');
+    // console.log('maxVisitDuration value:', value)
+    maxVisitDurationLocal = maxVisitDuration;
     // const job = envoy.job;
     // await job.attach({ label: 'maxVisitDuration', value: maxVisitDuration }); // show in the Envoy dashboard.
 
@@ -74,8 +75,9 @@ app.post('/visitor-sign-out', async (req, res) => {
   console.log('signInTime:', signInTime)
   console.log('signOutTime:', signOutTime)
 
-  const { maxVisitDuration } = await installStorage.get('maxVisitDuration');
-  console.log('maxVisitDuration sig out:', maxVisitDuration)
+  // const { maxVisitDuration } = await installStorage.get('maxVisitDuration');
+  // console.log('maxVisitDuration sig out:', maxVisitDuration)
+  console.log('maxVisitDurationLocal sig out:', maxVisitDurationLocal)
   // if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
   //   res.send({message: 'Success!'});
   // } else {
