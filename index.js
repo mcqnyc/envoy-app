@@ -22,7 +22,7 @@ app.post('/validate-me', async (req, res) => {
     const job = envoy.job;
     await job.attach({ label: 'maxVisitDuration', value: maxVisitDuration }); // show in the Envoy dashboard.
 
-    res.send({ message: 'Success!'});
+    res.send({ message: 'd!'});
     // res.send({ maxVisitDuration: maxVisitDuration, message: 'Success!'});
   } else {
     res.sendFailed('These values are bad: the duration should be between 0 and 180 minutes');
