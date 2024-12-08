@@ -52,6 +52,9 @@ app.post('/visitor-sign-out', async (req, res) => {
 
 app.use(function (req, res, next) {
   console.log('Time:', Date.now())
+  // console.log('req:', req)
+  console.log('======')
+  // console.log('res:', res)
   next()
 })
 
