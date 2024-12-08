@@ -50,6 +50,11 @@ app.post('/visitor-sign-out', async (req, res) => {
   // const visitorName = visitor.attributes['full-name'];
   const envoy = req.envoy
   console.log('envoy:', envoy)
+  console.log('envoy body:', envoy.body)
+  console.log('envoy > body > payload:', envoy.body.payload)
+  console.log('envoy > body > payload > attribs:', envoy.body.payload.attributes)
+  console.log('envoy > body > meta > config:', envoy.body.meta.config)
+  console.log('envoy > body > env > config:', envoy.body.env.config)
   const maxVisitDuration = envoy.payload.MaxVisitDuration
   console.log('maxVisitDuration:', maxVisitDuration)
 
@@ -58,10 +63,10 @@ app.post('/visitor-sign-out', async (req, res) => {
   // } else {
   //   res.sendFailed('These values are bad: the duration should be between 0 and 180 minutes');
   // }
-  const message = `${goodbye} ${visitorName}!`;
-  await job.attach({ label: 'Goodbye', value: message });
+  // const message = `${goodbye} ${visitorName}!`;
+  // await job.attach({ label: 'Goodbye', value: message });
   
-  res.send({ goodbye });
+  // res.send({ goodbye });
 });
 
 
