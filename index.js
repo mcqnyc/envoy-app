@@ -36,7 +36,8 @@ app.post('/visitor-sign-in', async (req, res) => {
 //   const visitorName = visitor.attributes['full-name'];
 
 //   const message = `${hello} ${visitorName}!`; // our custom greeting
-  await job.attach({ label: 'Event', value: 'Visitor signed in successfully' }); // show in the Envoy dashboard.
+  await job.attach({ label: 'Hello', value: 'Visitor signed in successfully' });
+  // await job.attach({ label: 'Event', value: 'Visitor signed in successfully' });
   // await job.attach({ label: 'Hello', value: message }); // show in the Envoy dashboard.
 
   // res.send({ hello });
@@ -63,6 +64,8 @@ app.post('/visitor-sign-out', async (req, res) => {
   const attributes = envoy.payload.attributes
   const signInTime = attributes['signed-in-at']
   const signOutTime = attributes['signed-out-at']
+  console.log('signInTime:', signInTime)
+  console.log('signOutTime:', signOutTime)
   // if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
   //   res.send({message: 'Success!'});
   // } else {
