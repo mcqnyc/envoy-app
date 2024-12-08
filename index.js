@@ -24,7 +24,8 @@ app.post('/validate-me', async (req, res) => {
     // await installStorage.set('maxVisitDuration', maxVisitDuration);
     // const { value } = await installStorage.get('maxVisitDuration');
     // console.log('maxVisitDuration value:', value)
-    maxVisitDurationLocal = maxVisitDuration;
+    console.log('here!')
+    let maxVisitDurationLocal = maxVisitDuration;
     // const job = envoy.job;
     // await job.attach({ label: 'maxVisitDuration', value: maxVisitDuration }); // show in the Envoy dashboard.
 
@@ -62,10 +63,10 @@ app.post('/visitor-sign-out', async (req, res) => {
   const installStorage = envoy.installStorage
   // console.log('envoy:', envoy)
   // console.log('envoy body:', envoy.body)
-  console.log('envoy > body > payload:', envoy.body.payload)
-  console.log('envoy > body > payload > attribs:', envoy.body.payload.attributes)
-  console.log('envoy > body > meta >:', envoy.body.meta)
-  console.log('envoy > body > meta > config:', envoy.body.meta.config)
+  // console.log('envoy > body > payload:', envoy.body.payload)
+  // console.log('envoy > body > payload > attribs:', envoy.body.payload.attributes)
+  // console.log('envoy > body > meta >:', envoy.body.meta)
+  // console.log('envoy > body > meta > config:', envoy.body.meta.config)
   // console.log('envoy > body > env > config:', envoy.body.env.config)
   // const maxVisitDuration = envoy.payload.MaxVisitDuration
   // console.log('maxVisitDuration:', maxVisitDuration)
