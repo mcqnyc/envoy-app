@@ -19,10 +19,14 @@ app.post('/validate-me', async (req, res) => {
   const maxVisitDuration = envoy.payload.MaxVisitDuration
 
   if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
-    const job = envoy.job;
-    await job.attach({ label: 'maxVisitDuration', value: maxVisitDuration }); // show in the Envoy dashboard.
+    await installStorage.set('maxVisitDuration', maxVisitDuration);
+    const { value } = await installStorage.get('maxVisitDuration');
+    console.log('maxVisitDuration value:', value)
+    
+    // const job = envoy.job;
+    // await job.attach({ label: 'maxVisitDuration', value: maxVisitDuration }); // show in the Envoy dashboard.
 
-    res.send({ message: 'd!'});
+    res.send({ message: 'Success!'});
     // res.send({ maxVisitDuration: maxVisitDuration, message: 'Success!'});
   } else {
     res.sendFailed('These values are bad: the duration should be between 0 and 180 minutes');
@@ -57,6 +61,7 @@ app.post('/visitor-sign-out', async (req, res) => {
   // console.log('envoy body:', envoy.body)
   console.log('envoy > body > payload:', envoy.body.payload)
   console.log('envoy > body > payload > attribs:', envoy.body.payload.attributes)
+  console.log('envoy > body > meta >:', envoy.body.meta)
   console.log('envoy > body > meta > config:', envoy.body.meta.config)
   // console.log('envoy > body > env > config:', envoy.body.env.config)
   // const maxVisitDuration = envoy.payload.MaxVisitDuration
@@ -66,6 +71,9 @@ app.post('/visitor-sign-out', async (req, res) => {
   const signOutTime = attributes['signed-out-at']
   console.log('signInTime:', signInTime)
   console.log('signOutTime:', signOutTime)
+
+  const { maxVisitDuration } = await installStorage.get('maxVisitDuration');
+  console.log('maxVisitDuration sig out:', maxVisitDuration)
   // if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
   //   res.send({message: 'Success!'});
   // } else {
