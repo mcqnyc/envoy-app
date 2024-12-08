@@ -16,6 +16,7 @@ app.post('/visit-duration', (req, res) => {
 
 app.post('/validate-me', async (req, res) => {
   const envoy = req.envoy
+  const installStorage = envoy.installStorage
   const maxVisitDuration = envoy.payload.MaxVisitDuration
 
   if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
