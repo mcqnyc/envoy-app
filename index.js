@@ -1,5 +1,6 @@
 const express = require('express');
 const { middleware, errorMiddleware } = require('@envoy/envoy-integrations-sdk');
+const e = require('express');
 
 const app = express();
 app.use(middleware());
@@ -38,13 +39,16 @@ app.post('/validate-me', (req, res) => {
   //   }
   // } = req;
   const envoy = req.envoy
-  console.log('foo: ', envoy.payload);
-  res.send({
-    foo, // we will save the original "foo" from the payload
-    bar: 'hello world', // along with a new "bar" variable
-  });
-  // res.sendFailed('These values are bad.');
-
+  const maxVisitDuration = envoy.payload.MaxVisitDuration
+  // console.log('foo: ', envoy.payload);
+  if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
+    res.send({
+      // maxVisitDuration, // we will save the original "foo" from the payload
+      // message: 'hello world', // along with a new "bar" variable
+    });
+  } else {
+    res.sendFailed('These values are bad: the duration should be between 0 and 180 minutes');
+  }
 });
 
 app.post('/visitor-sign-in', async (req, res) => {
