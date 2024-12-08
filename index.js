@@ -57,6 +57,7 @@ app.post('/visitor-sign-out', async (req, res) => {
   // const visitor = envoy.payload;
   // const visitorName = visitor.attributes['full-name'];
   const envoy = req.envoy
+  const installStorage = envoy.installStorage
   // console.log('envoy:', envoy)
   // console.log('envoy body:', envoy.body)
   console.log('envoy > body > payload:', envoy.body.payload)
