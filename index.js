@@ -30,14 +30,15 @@ app.post('/validate-me', (req, res) => {
   //   foo, // we will save the original "foo" from the payload
   //   bar: 'hello world', // along with a new "bar" variable
   // });
-  const {
-    envoy: {
-      payload: {
-        foo,
-      },
-    }
-  } = req;
-  console.log('foo: ', foo);
+  // const {
+  //   envoy: {
+  //     payload: {
+  //       foo,
+  //     },
+  //   }
+  // } = req;
+  const envoy = req.envoy
+  console.log('foo: ', envoy.payload);
   res.send({
     foo, // we will save the original "foo" from the payload
     bar: 'hello world', // along with a new "bar" variable
