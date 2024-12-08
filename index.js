@@ -20,12 +20,13 @@ app.post('/validate-me', async (req, res) => {
   // const installStorage = envoy.installStorage
   const maxVisitDuration = envoy.payload.MaxVisitDuration
 
-  if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
+  if (maxVisitDuration >= 0 && maxVisitDuration <= 18) {
     // await installStorage.set('maxVisitDuration', maxVisitDuration);
     // const { value } = await installStorage.get('maxVisitDuration');
     // console.log('maxVisitDuration value:', value)
     console.log('here!')
-    let maxVisitDurationLocal = maxVisitDuration;
+    maxVisitDurationLocal = maxVisitDuration;
+    console.log('maxVisitDurationLocal: ', maxVisitDurationLocal)
     // const job = envoy.job;
     // await job.attach({ label: 'maxVisitDuration', value: maxVisitDuration }); // show in the Envoy dashboard.
 
