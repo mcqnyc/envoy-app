@@ -22,7 +22,8 @@ app.post('/validate-me', async (req, res) => {
     const job = envoy.job;
     await job.attach({ label: 'maxVisitDuration', value: maxVisitDuration }); // show in the Envoy dashboard.
 
-    res.send({ maxVisitDuration: maxVisitDuration, message: 'Success!'});
+    res.send({ message: 'Success!'});
+    // res.send({ maxVisitDuration: maxVisitDuration, message: 'Success!'});
   } else {
     res.sendFailed('These values are bad: the duration should be between 0 and 180 minutes');
   }
@@ -36,8 +37,7 @@ app.post('/visitor-sign-in', async (req, res) => {
 //   const visitorName = visitor.attributes['full-name'];
 
 //   const message = `${hello} ${visitorName}!`; // our custom greeting
-  await job.attach({ label: 'Hello', value: 'Visitor signed in successfully' });
-  // await job.attach({ label: 'Event', value: 'Visitor signed in successfully' });
+  await job.attach({ label: 'Event', value: 'Visitor signed in successfully' });
   // await job.attach({ label: 'Hello', value: message }); // show in the Envoy dashboard.
 
   // res.send({ hello });
