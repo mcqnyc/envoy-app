@@ -40,26 +40,25 @@ app.post('/visitor-sign-in', async (req, res) => {
 
 app.post('/visitor-sign-out', async (req, res) => {
   const envoy = req.envoy;
+  const job = envoy.job;
+  const installStorage = envoy.installStorage;
   const attributes = envoy.payload.attributes;
+
   const signInTime = attributes['signed-in-at'];
   const signOutTime = attributes['signed-out-at'];
-  const installStorage = envoy.installStorage;
   const { value } = await installStorage.get('maxVisitDuration');
-  console.log('value: ', value);
-  
+
   const signIn = new Date(signInTime);
   const signOut = new Date(signOutTime);
   const maxVisitDurationInMillseconds = value * 60 * 1000;
-  console.log('maxVisitDurationInMillseconds: ', maxVisitDurationInMillseconds);
   const differenceInMilliseconds = signOut - signIn;
-  console.log('signIn: ', signIn);
-  console.log('signOut: ', signOut);
-  console.log('differenceInMilliseconds: ', differenceInMilliseconds);
+
 
   if (maxVisitDurationInMillseconds < differenceInMilliseconds) {
     res.sendFailed('The visitor overstayed their alloted time.');
   } else {
-    res.send({message: 'The visitor did not overstay their alloted time.'});
+    await job.attach({ label: 'Event', value: 'The visitor did not overstay their alloted time.' });
+    res.send({ message: 'Success!'});
   }
 });
 
