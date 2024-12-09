@@ -24,7 +24,7 @@ app.post('/validate-me', (req, res) => {
   if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
     maxVisitDurationLocal = maxVisitDuration;
 
-    res.send();
+    res.send({ message: 'Success!'});
   } else {
     res.sendFailed('These values are bad: the duration should be between 0 and 180 minutes');
   }
