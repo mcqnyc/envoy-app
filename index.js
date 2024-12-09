@@ -44,12 +44,12 @@ app.post('/visitor-sign-out', async (req, res) => {
   const signInTime = attributes['signed-in-at'];
   const signOutTime = attributes['signed-out-at'];
   const installStorage = envoy.installStorage;
-  const maxVisitDuration = await installStorage.get('maxVisitDuration');
-  console.log('maxVisitDuration: ', maxVisitDuration);
+  const { value } = await installStorage.get('maxVisitDuration');
+  console.log('value: ', value);
   
   const signIn = new Date(signInTime);
   const signOut = new Date(signOutTime);
-  const maxVisitDurationInMillseconds = maxVisitDuration * 60 * 1000;
+  const maxVisitDurationInMillseconds = value * 60 * 1000;
   console.log('maxVisitDurationInMillseconds: ', maxVisitDurationInMillseconds);
   const differenceInMilliseconds = signOut - signIn;
   console.log('signIn: ', signIn);
