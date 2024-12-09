@@ -36,7 +36,7 @@ app.post('/visitor-sign-in', async (req, res) => {
   const job = envoy.job;
 
   await job.attach({ label: 'Event', value: 'Visitor signed in successfully' });
-  res.send();
+  res.send({ message: 'Success!'});
 });
 
 
