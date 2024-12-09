@@ -17,12 +17,16 @@ app.post('/visit-duration', (req, res) => {
 
 let maxVisitDurationLocal = Infinity;
 
-app.post('/validate-me', (req, res) => {
-  const envoy = req.envoy
-  const maxVisitDuration = envoy.payload.MaxVisitDuration
+app.post('/validate-me', async (req, res) => {
+  const envoy = req.envoy;
+  const maxVisitDuration = envoy.payload.MaxVisitDuration;
+  const installStorage = envoy.installStorage;
 
   if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
-    maxVisitDurationLocal = maxVisitDuration;
+    // maxVisitDurationLocal = maxVisitDuration;
+    await installStorage.set('maxVisitDuration', maxVisitDuration);
+    const { value } = await installStorage.get('maxVisitDuration');
+    console.log('maxVisitDuration ....', value);
 
     res.send({ message: 'Success!'});
   } else {
@@ -40,15 +44,20 @@ app.post('/visitor-sign-in', async (req, res) => {
 });
 
 
-app.post('/visitor-sign-out', (req, res) => {
+app.post('/visitor-sign-out', async (req, res) => {
   const envoy = req.envoy
+  const installStorage = envoy.installStorage;
+  const { value } = await installStorage.get('maxVisitDuration');
+  console.log('maxVisitDuration ....', value);
+  
   const attributes = envoy.payload.attributes
   const signInTime = attributes['signed-in-at']
   const signOutTime = attributes['signed-out-at']
 
   const signIn = new Date(signInTime);
   const signOut = new Date(signOutTime);
-  const maxDurationInMillseconds = maxVisitDurationLocal * 60 * 1000;
+  const maxDurationInMillseconds = value * 60 * 1000;
+  // const maxDurationInMillseconds = maxVisitDurationLocal * 60 * 1000;
   const differenceInMilliseconds = signOut - signIn;
 
   if (maxDurationInMillseconds < differenceInMilliseconds) {
