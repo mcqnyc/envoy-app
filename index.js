@@ -4,7 +4,7 @@ const { middleware, errorMiddleware } = require('@envoy/envoy-integrations-sdk')
 const app = express();
 app.use(middleware());
 
-let maxVisitDurationLocal = false;
+let maxVisitDurationLocal = Infinity;
 
 app.post('/visit-duration', (req, res) => {
   res.send([
@@ -21,7 +21,7 @@ app.post('/validate-me', (req, res) => {
   // const installStorage = envoy.installStorage
   const maxVisitDuration = envoy.payload.MaxVisitDuration
 
-  if (maxVisitDuration >= 0 && maxVisitDuration <= 18) {
+  if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
     // await installStorage.set('maxVisitDuration', maxVisitDuration);
     // const { value } = await installStorage.get('maxVisitDuration');
     // console.log('maxVisitDuration value:', value)
@@ -69,27 +69,31 @@ app.post('/visitor-sign-out', async (req, res) => {
   const signOutTime = attributes['signed-out-at']
   console.log('signInTime:', signInTime)
   console.log('signOutTime:', signOutTime)
-
+  
   // const { maxVisitDuration } = await installStorage.get('maxVisitDuration');
   // console.log('maxVisitDuration sig out:', maxVisitDuration)
   console.log('maxVisitDurationLocal sig out:', maxVisitDurationLocal)
-  // if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
-  //   res.send({message: 'Success!'});
-  // } else {
-  //   res.sendFailed('These values are bad: the duration should be between 0 and 180 minutes');
-  // }
-  // const message = `${goodbye} ${visitorName}!`;
-  // await job.attach({ label: 'Goodbye', value: message });
   
-  // res.send({ goodbye });
+  const signIn = new Date(signInTime);
+  console.log('signIn:', signIn)
+  const signOut = new Date(signOutTime);
+  console.log('signOut:', signOut)
+  const maxDurationInMillseconds = maxVisitDurationLocal * 60 * 1000;
+  console.log('maxDurationInMillseconds:', maxDurationInMillseconds)
+  const differenceInMilliseconds = signOut - signIn;
+  console.log('differenceInMilliseconds:', differenceInMilliseconds)
+
+  if (maxDurationInMillseconds < differenceInMilliseconds) {
+    res.sendFailed('The visitor overstayed their alloted time.');
+  } else {
+    res.send({message: 'The visitor did not overstay their alloted time.'});
+  }
 });
 
 
 app.use(function (req, res, next) {
   console.log('Time:', Date.now())
-  // console.log('req:', req)
   console.log('======')
-  // console.log('res:', res)
   next()
 })
 
