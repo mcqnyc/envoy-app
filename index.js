@@ -48,7 +48,7 @@ app.post('/visitor-sign-out', async (req, res) => {
   const envoy = req.envoy
   const installStorage = envoy.installStorage;
   const { value } = await installStorage.get('maxVisitDuration');
-  console.log('maxVisitDuration ....', value);
+  console.log('maxVisitDuration 2....', value);
   
   const attributes = envoy.payload.attributes
   const signInTime = attributes['signed-in-at']
