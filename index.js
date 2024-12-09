@@ -15,12 +15,13 @@ app.post('/visit-duration', (req, res) => {
   ]);
 });
 
-app.post('/validate-me', async (req, res) => {
+app.post('/validate-me', (req, res) => {
+// app.post('/validate-me', async (req, res) => {
   const envoy = req.envoy
   // const installStorage = envoy.installStorage
   const maxVisitDuration = envoy.payload.MaxVisitDuration
 
-  if (maxVisitDuration >= 0 && maxVisitDuration <= 18) {
+  if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
     // await installStorage.set('maxVisitDuration', maxVisitDuration);
     // const { value } = await installStorage.get('maxVisitDuration');
     // console.log('maxVisitDuration value:', value)
@@ -30,7 +31,7 @@ app.post('/validate-me', async (req, res) => {
     // const job = envoy.job;
     // await job.attach({ label: 'maxVisitDuration', value: maxVisitDuration }); // show in the Envoy dashboard.
 
-    res.send({ message: 'Success!'});
+    res.send({ message: 'Success!', message: 'test'});
     // res.send({ maxVisitDuration: maxVisitDuration, message: 'Success!'});
   } else {
     res.sendFailed('These values are bad: the duration should be between 0 and 180 minutes');
