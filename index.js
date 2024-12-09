@@ -40,16 +40,19 @@ app.post('/visitor-sign-in', async (req, res) => {
 
 app.post('/visitor-sign-out', async (req, res) => {
   const envoy = req.envoy;
-  const attributes = envoy.payload.attributes
-  const signInTime = attributes['signed-in-at']
-  const signOutTime = attributes['signed-out-at']
+  const attributes = envoy.payload.attributes;
+  const signInTime = attributes['signed-in-at'];
+  const signOutTime = attributes['signed-out-at'];
   const installStorage = envoy.installStorage;
   const { maxVisitDuration } = await installStorage.get('maxVisitDuration');
-
+  console.log('maxVisitDuration: ', maxVisitDuration);
+  
   const signIn = new Date(signInTime);
   const signOut = new Date(signOutTime);
   const maxVisitDurationInMillseconds = maxVisitDuration * 60 * 1000;
+  console.log('maxVisitDurationInMillseconds: ', maxVisitDurationInMillseconds);
   const differenceInMilliseconds = signOut - signIn;
+  console.log('differenceInMilliseconds: ', differenceInMilliseconds);
 
   if (maxVisitDurationInMillseconds < differenceInMilliseconds) {
     res.sendFailed('The visitor overstayed their alloted time.');
