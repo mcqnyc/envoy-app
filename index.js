@@ -21,7 +21,7 @@ app.post('/validate-me', (req, res) => {
   // const installStorage = envoy.installStorage
   const maxVisitDuration = envoy.payload.MaxVisitDuration
 
-  if (maxVisitDuration >= 0 && maxVisitDuration <= 180) {
+  if (maxVisitDuration >= 0 && maxVisitDuration <= 18) {
     // await installStorage.set('maxVisitDuration', maxVisitDuration);
     // const { value } = await installStorage.get('maxVisitDuration');
     // console.log('maxVisitDuration value:', value)
@@ -39,19 +39,11 @@ app.post('/validate-me', (req, res) => {
 });
 
 app.post('/visitor-sign-in', async (req, res) => {
-  const envoy = req.envoy; // our middleware adds an "envoy" object to req.
+  const envoy = req.envoy;
   const job = envoy.job;
-  // const hello = envoy.meta.config.HELLO;
-//   const visitor = envoy.payload;
-//   const visitorName = visitor.attributes['full-name'];
 
-//   const message = `${hello} ${visitorName}!`; // our custom greeting
   await job.attach({ label: 'Event', value: 'Visitor signed in successfully' });
-  // await job.attach({ label: 'Hello', value: message }); // show in the Envoy dashboard.
-
-  // res.send({ hello });
   res.send();
-  // res.send({ hello });
 });
 
 
